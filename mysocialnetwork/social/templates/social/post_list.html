@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+</head>
+<body>
+    <h1>Posts</h1>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{% url 'post_detail' post.id %}">{{ post.content }}</a> - {{ post.author.username }} ({{ post.created_at }})
+            </li>
+        {% empty %}
+            <li>No posts available.</li>
+            <li><a href="{% url 'create_post' %}">Create a new post</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

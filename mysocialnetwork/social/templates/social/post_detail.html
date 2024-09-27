@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.content }}</title>
+</head>
+<body>
+    <h1>{{ post.content }}</h1>
+    <p>Author: {{ post.author.username }}</p>
+    <p>Created at: {{ post.created_at }}</p>
+
+    <p><strong>Likes: {{ post.likes.count }}</strong></p>
+    <form action="{% url 'like_post' post.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">
+            {% if request.user in post.likes.all %}
+                Unlike
+            {% else %}
+                Like
+            {% endif %}
+        </button>
+    </form>
+
+    <h2>Comments</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.content }} - {{ comment.author.username }}</li>
+        {% empty %}
+            <li>No comments.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Add a comment:</h3>
+    <form method="POST">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">Add Comment</button>
+    </form>
+</body>
+</html>

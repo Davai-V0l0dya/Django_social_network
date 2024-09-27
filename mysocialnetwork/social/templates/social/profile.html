@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>{{ profile.user.username }}'s Profile</h1>
+    <p>Bio: {{ profile.bio }}</p>
+
+    <h2>Your Posts</h2>
+    <ul>
+        {% for post in profile.user.post_set.all %}
+            <li>
+                <a href="{% url 'post_detail' post.id %}">{{ post.content }}</a>
+            </li>
+        {% empty %}
+            <li>No posts available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
